@@ -1,0 +1,47 @@
+# ---------- AMW data model (Transformer v2) ----------
+type Story
+  @model
+  @auth(rules: [
+    { allow: owner },                      # creator can CRUD
+    { allow: private, operations: [read] } # any signed-in user can read
+  ]) {
+  id: ID!
+  title: String!
+  description: String
+  tags: [String]
+  chapters: [Chapter] @hasMany(indexName: "byStory", fields: ["id"])
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+type Chapter
+  @model
+  @auth(rules: [
+    { allow: owner },
+    { allow: private, operations: [read] }
+  ]) {
+  id: ID!
+  title: String!
+  storyID: ID! @index(name: "byStory")
+  story: Story @belongsTo(fields: ["storyID"])
+  moments: [Moment] @hasMany(indexName: "byChapter", fields: ["id"])
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+type Moment
+  @model
+  @auth(rules: [
+    { allow: owner },
+    { allow: private, operations: [read] }
+  ]) {
+  id: ID!
+  title: String!
+  notes: String
+  chapterID: ID! @index(name: "byChapter")
+  chapter: Chapter @belongsTo(fields: ["chapterID"])
+  mediaKey: String
+  mediaType: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
