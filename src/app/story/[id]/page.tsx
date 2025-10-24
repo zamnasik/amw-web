@@ -16,8 +16,13 @@ const client = generateClient();
 
 const GET_STORY = /* GraphQL */ `
   query GetStory($id: ID!) {
-    getStory(id: $id) { id title description }
+  getStory(id: $id) {
+    id
+    title
+    content       # ✅
+    createdAt
   }
+}
 `;
 
 const LIST_CHAPTERS_FOR_STORY = /* GraphQL */ `

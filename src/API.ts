@@ -5,22 +5,21 @@
 export type CreateStoryInput = {
   id?: string | null,
   title: string,
-  description?: string | null,
-  tags?: Array< string | null > | null,
+  content?: string | null,
+  owner?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
 };
 
 export type ModelStoryConditionInput = {
   title?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  tags?: ModelStringInput | null,
+  content?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelStoryConditionInput | null > | null,
   or?: Array< ModelStoryConditionInput | null > | null,
   not?: ModelStoryConditionInput | null,
-  owner?: ModelStringInput | null,
 };
 
 export type ModelStringInput = {
@@ -67,57 +66,17 @@ export type Story = {
   __typename: "Story",
   id: string,
   title: string,
-  description?: string | null,
-  tags?: Array< string | null > | null,
-  chapters?: ModelChapterConnection | null,
+  content?: string | null,
+  owner?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
-  owner?: string | null,
-};
-
-export type ModelChapterConnection = {
-  __typename: "ModelChapterConnection",
-  items:  Array<Chapter | null >,
-  nextToken?: string | null,
-};
-
-export type Chapter = {
-  __typename: "Chapter",
-  id: string,
-  title: string,
-  storyID: string,
-  story?: Story | null,
-  moments?: ModelMomentConnection | null,
-  createdAt?: string | null,
-  updatedAt?: string | null,
-  owner?: string | null,
-};
-
-export type ModelMomentConnection = {
-  __typename: "ModelMomentConnection",
-  items:  Array<Moment | null >,
-  nextToken?: string | null,
-};
-
-export type Moment = {
-  __typename: "Moment",
-  id: string,
-  title: string,
-  notes?: string | null,
-  chapterID: string,
-  chapter?: Chapter | null,
-  mediaKey?: string | null,
-  mediaType?: string | null,
-  createdAt?: string | null,
-  updatedAt?: string | null,
-  owner?: string | null,
 };
 
 export type UpdateStoryInput = {
   id: string,
   title?: string | null,
-  description?: string | null,
-  tags?: Array< string | null > | null,
+  content?: string | null,
+  owner?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
 };
@@ -128,21 +87,24 @@ export type DeleteStoryInput = {
 
 export type CreateChapterInput = {
   id?: string | null,
-  title: string,
   storyID: string,
+  title: string,
+  text?: string | null,
+  owner?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
 };
 
 export type ModelChapterConditionInput = {
-  title?: ModelStringInput | null,
   storyID?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  text?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelChapterConditionInput | null > | null,
   or?: Array< ModelChapterConditionInput | null > | null,
   not?: ModelChapterConditionInput | null,
-  owner?: ModelStringInput | null,
 };
 
 export type ModelIDInput = {
@@ -161,10 +123,23 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
+export type Chapter = {
+  __typename: "Chapter",
+  id: string,
+  storyID: string,
+  title: string,
+  text?: string | null,
+  owner?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+};
+
 export type UpdateChapterInput = {
   id: string,
-  title?: string | null,
   storyID?: string | null,
+  title?: string | null,
+  text?: string | null,
+  owner?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
 };
@@ -175,36 +150,39 @@ export type DeleteChapterInput = {
 
 export type CreateMomentInput = {
   id?: string | null,
-  title: string,
-  notes?: string | null,
   chapterID: string,
-  mediaKey?: string | null,
-  mediaType?: string | null,
+  title?: string | null,
+  owner?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
 };
 
 export type ModelMomentConditionInput = {
-  title?: ModelStringInput | null,
-  notes?: ModelStringInput | null,
   chapterID?: ModelIDInput | null,
-  mediaKey?: ModelStringInput | null,
-  mediaType?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelMomentConditionInput | null > | null,
   or?: Array< ModelMomentConditionInput | null > | null,
   not?: ModelMomentConditionInput | null,
-  owner?: ModelStringInput | null,
+};
+
+export type Moment = {
+  __typename: "Moment",
+  id: string,
+  chapterID: string,
+  title?: string | null,
+  owner?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
 };
 
 export type UpdateMomentInput = {
   id: string,
-  title?: string | null,
-  notes?: string | null,
   chapterID?: string | null,
-  mediaKey?: string | null,
-  mediaType?: string | null,
+  title?: string | null,
+  owner?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
 };
@@ -216,14 +194,13 @@ export type DeleteMomentInput = {
 export type ModelStoryFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  tags?: ModelStringInput | null,
+  content?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelStoryFilterInput | null > | null,
   or?: Array< ModelStoryFilterInput | null > | null,
   not?: ModelStoryFilterInput | null,
-  owner?: ModelStringInput | null,
 };
 
 export type ModelStoryConnection = {
@@ -234,42 +211,45 @@ export type ModelStoryConnection = {
 
 export type ModelChapterFilterInput = {
   id?: ModelIDInput | null,
-  title?: ModelStringInput | null,
   storyID?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  text?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelChapterFilterInput | null > | null,
   or?: Array< ModelChapterFilterInput | null > | null,
   not?: ModelChapterFilterInput | null,
-  owner?: ModelStringInput | null,
+};
+
+export type ModelChapterConnection = {
+  __typename: "ModelChapterConnection",
+  items:  Array<Chapter | null >,
+  nextToken?: string | null,
 };
 
 export type ModelMomentFilterInput = {
   id?: ModelIDInput | null,
-  title?: ModelStringInput | null,
-  notes?: ModelStringInput | null,
   chapterID?: ModelIDInput | null,
-  mediaKey?: ModelStringInput | null,
-  mediaType?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelMomentFilterInput | null > | null,
   or?: Array< ModelMomentFilterInput | null > | null,
   not?: ModelMomentFilterInput | null,
-  owner?: ModelStringInput | null,
 };
 
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
+export type ModelMomentConnection = {
+  __typename: "ModelMomentConnection",
+  items:  Array<Moment | null >,
+  nextToken?: string | null,
+};
 
 export type ModelSubscriptionStoryFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   title?: ModelSubscriptionStringInput | null,
-  description?: ModelSubscriptionStringInput | null,
-  tags?: ModelSubscriptionStringInput | null,
+  content?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionStoryFilterInput | null > | null,
@@ -309,8 +289,9 @@ export type ModelSubscriptionStringInput = {
 
 export type ModelSubscriptionChapterFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  title?: ModelSubscriptionStringInput | null,
   storyID?: ModelSubscriptionIDInput | null,
+  title?: ModelSubscriptionStringInput | null,
+  text?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionChapterFilterInput | null > | null,
@@ -320,11 +301,8 @@ export type ModelSubscriptionChapterFilterInput = {
 
 export type ModelSubscriptionMomentFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  title?: ModelSubscriptionStringInput | null,
-  notes?: ModelSubscriptionStringInput | null,
   chapterID?: ModelSubscriptionIDInput | null,
-  mediaKey?: ModelSubscriptionStringInput | null,
-  mediaType?: ModelSubscriptionStringInput | null,
+  title?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionMomentFilterInput | null > | null,
@@ -342,15 +320,10 @@ export type CreateStoryMutation = {
     __typename: "Story",
     id: string,
     title: string,
-    description?: string | null,
-    tags?: Array< string | null > | null,
-    chapters?:  {
-      __typename: "ModelChapterConnection",
-      nextToken?: string | null,
-    } | null,
+    content?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -364,15 +337,10 @@ export type UpdateStoryMutation = {
     __typename: "Story",
     id: string,
     title: string,
-    description?: string | null,
-    tags?: Array< string | null > | null,
-    chapters?:  {
-      __typename: "ModelChapterConnection",
-      nextToken?: string | null,
-    } | null,
+    content?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -386,15 +354,10 @@ export type DeleteStoryMutation = {
     __typename: "Story",
     id: string,
     title: string,
-    description?: string | null,
-    tags?: Array< string | null > | null,
-    chapters?:  {
-      __typename: "ModelChapterConnection",
-      nextToken?: string | null,
-    } | null,
+    content?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -407,25 +370,12 @@ export type CreateChapterMutation = {
   createChapter?:  {
     __typename: "Chapter",
     id: string,
-    title: string,
     storyID: string,
-    story?:  {
-      __typename: "Story",
-      id: string,
-      title: string,
-      description?: string | null,
-      tags?: Array< string | null > | null,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    moments?:  {
-      __typename: "ModelMomentConnection",
-      nextToken?: string | null,
-    } | null,
+    title: string,
+    text?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -438,25 +388,12 @@ export type UpdateChapterMutation = {
   updateChapter?:  {
     __typename: "Chapter",
     id: string,
-    title: string,
     storyID: string,
-    story?:  {
-      __typename: "Story",
-      id: string,
-      title: string,
-      description?: string | null,
-      tags?: Array< string | null > | null,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    moments?:  {
-      __typename: "ModelMomentConnection",
-      nextToken?: string | null,
-    } | null,
+    title: string,
+    text?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -469,25 +406,12 @@ export type DeleteChapterMutation = {
   deleteChapter?:  {
     __typename: "Chapter",
     id: string,
-    title: string,
     storyID: string,
-    story?:  {
-      __typename: "Story",
-      id: string,
-      title: string,
-      description?: string | null,
-      tags?: Array< string | null > | null,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    moments?:  {
-      __typename: "ModelMomentConnection",
-      nextToken?: string | null,
-    } | null,
+    title: string,
+    text?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -500,23 +424,11 @@ export type CreateMomentMutation = {
   createMoment?:  {
     __typename: "Moment",
     id: string,
-    title: string,
-    notes?: string | null,
     chapterID: string,
-    chapter?:  {
-      __typename: "Chapter",
-      id: string,
-      title: string,
-      storyID: string,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    mediaKey?: string | null,
-    mediaType?: string | null,
+    title?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -529,23 +441,11 @@ export type UpdateMomentMutation = {
   updateMoment?:  {
     __typename: "Moment",
     id: string,
-    title: string,
-    notes?: string | null,
     chapterID: string,
-    chapter?:  {
-      __typename: "Chapter",
-      id: string,
-      title: string,
-      storyID: string,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    mediaKey?: string | null,
-    mediaType?: string | null,
+    title?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -558,23 +458,11 @@ export type DeleteMomentMutation = {
   deleteMoment?:  {
     __typename: "Moment",
     id: string,
-    title: string,
-    notes?: string | null,
     chapterID: string,
-    chapter?:  {
-      __typename: "Chapter",
-      id: string,
-      title: string,
-      storyID: string,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    mediaKey?: string | null,
-    mediaType?: string | null,
+    title?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -587,15 +475,10 @@ export type GetStoryQuery = {
     __typename: "Story",
     id: string,
     title: string,
-    description?: string | null,
-    tags?: Array< string | null > | null,
-    chapters?:  {
-      __typename: "ModelChapterConnection",
-      nextToken?: string | null,
-    } | null,
+    content?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -612,11 +495,10 @@ export type ListStoriesQuery = {
       __typename: "Story",
       id: string,
       title: string,
-      description?: string | null,
-      tags?: Array< string | null > | null,
+      content?: string | null,
+      owner?: string | null,
       createdAt?: string | null,
       updatedAt?: string | null,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -630,25 +512,12 @@ export type GetChapterQuery = {
   getChapter?:  {
     __typename: "Chapter",
     id: string,
-    title: string,
     storyID: string,
-    story?:  {
-      __typename: "Story",
-      id: string,
-      title: string,
-      description?: string | null,
-      tags?: Array< string | null > | null,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    moments?:  {
-      __typename: "ModelMomentConnection",
-      nextToken?: string | null,
-    } | null,
+    title: string,
+    text?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -664,11 +533,12 @@ export type ListChaptersQuery = {
     items:  Array< {
       __typename: "Chapter",
       id: string,
-      title: string,
       storyID: string,
+      title: string,
+      text?: string | null,
+      owner?: string | null,
       createdAt?: string | null,
       updatedAt?: string | null,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -682,23 +552,11 @@ export type GetMomentQuery = {
   getMoment?:  {
     __typename: "Moment",
     id: string,
-    title: string,
-    notes?: string | null,
     chapterID: string,
-    chapter?:  {
-      __typename: "Chapter",
-      id: string,
-      title: string,
-      storyID: string,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    mediaKey?: string | null,
-    mediaType?: string | null,
+    title?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
@@ -714,65 +572,11 @@ export type ListMomentsQuery = {
     items:  Array< {
       __typename: "Moment",
       id: string,
-      title: string,
-      notes?: string | null,
       chapterID: string,
-      mediaKey?: string | null,
-      mediaType?: string | null,
+      title?: string | null,
+      owner?: string | null,
       createdAt?: string | null,
       updatedAt?: string | null,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type ChaptersByStoryIDQueryVariables = {
-  storyID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelChapterFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ChaptersByStoryIDQuery = {
-  chaptersByStoryID?:  {
-    __typename: "ModelChapterConnection",
-    items:  Array< {
-      __typename: "Chapter",
-      id: string,
-      title: string,
-      storyID: string,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type MomentsByChapterIDQueryVariables = {
-  chapterID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelMomentFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type MomentsByChapterIDQuery = {
-  momentsByChapterID?:  {
-    __typename: "ModelMomentConnection",
-    items:  Array< {
-      __typename: "Moment",
-      id: string,
-      title: string,
-      notes?: string | null,
-      chapterID: string,
-      mediaKey?: string | null,
-      mediaType?: string | null,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -780,7 +584,6 @@ export type MomentsByChapterIDQuery = {
 
 export type OnCreateStorySubscriptionVariables = {
   filter?: ModelSubscriptionStoryFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateStorySubscription = {
@@ -788,21 +591,15 @@ export type OnCreateStorySubscription = {
     __typename: "Story",
     id: string,
     title: string,
-    description?: string | null,
-    tags?: Array< string | null > | null,
-    chapters?:  {
-      __typename: "ModelChapterConnection",
-      nextToken?: string | null,
-    } | null,
+    content?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateStorySubscriptionVariables = {
   filter?: ModelSubscriptionStoryFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateStorySubscription = {
@@ -810,21 +607,15 @@ export type OnUpdateStorySubscription = {
     __typename: "Story",
     id: string,
     title: string,
-    description?: string | null,
-    tags?: Array< string | null > | null,
-    chapters?:  {
-      __typename: "ModelChapterConnection",
-      nextToken?: string | null,
-    } | null,
+    content?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteStorySubscriptionVariables = {
   filter?: ModelSubscriptionStoryFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteStorySubscription = {
@@ -832,194 +623,108 @@ export type OnDeleteStorySubscription = {
     __typename: "Story",
     id: string,
     title: string,
-    description?: string | null,
-    tags?: Array< string | null > | null,
-    chapters?:  {
-      __typename: "ModelChapterConnection",
-      nextToken?: string | null,
-    } | null,
+    content?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnCreateChapterSubscriptionVariables = {
   filter?: ModelSubscriptionChapterFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateChapterSubscription = {
   onCreateChapter?:  {
     __typename: "Chapter",
     id: string,
-    title: string,
     storyID: string,
-    story?:  {
-      __typename: "Story",
-      id: string,
-      title: string,
-      description?: string | null,
-      tags?: Array< string | null > | null,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    moments?:  {
-      __typename: "ModelMomentConnection",
-      nextToken?: string | null,
-    } | null,
+    title: string,
+    text?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateChapterSubscriptionVariables = {
   filter?: ModelSubscriptionChapterFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateChapterSubscription = {
   onUpdateChapter?:  {
     __typename: "Chapter",
     id: string,
-    title: string,
     storyID: string,
-    story?:  {
-      __typename: "Story",
-      id: string,
-      title: string,
-      description?: string | null,
-      tags?: Array< string | null > | null,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    moments?:  {
-      __typename: "ModelMomentConnection",
-      nextToken?: string | null,
-    } | null,
+    title: string,
+    text?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteChapterSubscriptionVariables = {
   filter?: ModelSubscriptionChapterFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteChapterSubscription = {
   onDeleteChapter?:  {
     __typename: "Chapter",
     id: string,
-    title: string,
     storyID: string,
-    story?:  {
-      __typename: "Story",
-      id: string,
-      title: string,
-      description?: string | null,
-      tags?: Array< string | null > | null,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    moments?:  {
-      __typename: "ModelMomentConnection",
-      nextToken?: string | null,
-    } | null,
+    title: string,
+    text?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnCreateMomentSubscriptionVariables = {
   filter?: ModelSubscriptionMomentFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnCreateMomentSubscription = {
   onCreateMoment?:  {
     __typename: "Moment",
     id: string,
-    title: string,
-    notes?: string | null,
     chapterID: string,
-    chapter?:  {
-      __typename: "Chapter",
-      id: string,
-      title: string,
-      storyID: string,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    mediaKey?: string | null,
-    mediaType?: string | null,
+    title?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnUpdateMomentSubscriptionVariables = {
   filter?: ModelSubscriptionMomentFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnUpdateMomentSubscription = {
   onUpdateMoment?:  {
     __typename: "Moment",
     id: string,
-    title: string,
-    notes?: string | null,
     chapterID: string,
-    chapter?:  {
-      __typename: "Chapter",
-      id: string,
-      title: string,
-      storyID: string,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    mediaKey?: string | null,
-    mediaType?: string | null,
+    title?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };
 
 export type OnDeleteMomentSubscriptionVariables = {
   filter?: ModelSubscriptionMomentFilterInput | null,
-  owner?: string | null,
 };
 
 export type OnDeleteMomentSubscription = {
   onDeleteMoment?:  {
     __typename: "Moment",
     id: string,
-    title: string,
-    notes?: string | null,
     chapterID: string,
-    chapter?:  {
-      __typename: "Chapter",
-      id: string,
-      title: string,
-      storyID: string,
-      createdAt?: string | null,
-      updatedAt?: string | null,
-      owner?: string | null,
-    } | null,
-    mediaKey?: string | null,
-    mediaType?: string | null,
+    title?: string | null,
+    owner?: string | null,
     createdAt?: string | null,
     updatedAt?: string | null,
-    owner?: string | null,
   } | null,
 };

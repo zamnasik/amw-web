@@ -12,15 +12,10 @@ export const getStory = /* GraphQL */ `query GetStory($id: ID!) {
   getStory(id: $id) {
     id
     title
-    description
-    tags
-    chapters {
-      nextToken
-      __typename
-    }
+    content
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -34,11 +29,10 @@ export const listStories = /* GraphQL */ `query ListStories(
     items {
       id
       title
-      description
-      tags
+      content
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     nextToken
@@ -52,25 +46,12 @@ export const listStories = /* GraphQL */ `query ListStories(
 export const getChapter = /* GraphQL */ `query GetChapter($id: ID!) {
   getChapter(id: $id) {
     id
-    title
     storyID
-    story {
-      id
-      title
-      description
-      tags
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    moments {
-      nextToken
-      __typename
-    }
+    title
+    text
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -86,11 +67,12 @@ export const listChapters = /* GraphQL */ `query ListChapters(
   listChapters(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      title
       storyID
+      title
+      text
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     nextToken
@@ -104,23 +86,11 @@ export const listChapters = /* GraphQL */ `query ListChapters(
 export const getMoment = /* GraphQL */ `query GetMoment($id: ID!) {
   getMoment(id: $id) {
     id
-    title
-    notes
     chapterID
-    chapter {
-      id
-      title
-      storyID
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    mediaKey
-    mediaType
+    title
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -133,14 +103,11 @@ export const listMoments = /* GraphQL */ `query ListMoments(
   listMoments(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      title
-      notes
       chapterID
-      mediaKey
-      mediaType
+      title
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     nextToken
@@ -150,69 +117,4 @@ export const listMoments = /* GraphQL */ `query ListMoments(
 ` as GeneratedQuery<
   APITypes.ListMomentsQueryVariables,
   APITypes.ListMomentsQuery
->;
-export const chaptersByStoryID = /* GraphQL */ `query ChaptersByStoryID(
-  $storyID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelChapterFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  chaptersByStoryID(
-    storyID: $storyID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      title
-      storyID
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ChaptersByStoryIDQueryVariables,
-  APITypes.ChaptersByStoryIDQuery
->;
-export const momentsByChapterID = /* GraphQL */ `query MomentsByChapterID(
-  $chapterID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelMomentFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  momentsByChapterID(
-    chapterID: $chapterID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      title
-      notes
-      chapterID
-      mediaKey
-      mediaType
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.MomentsByChapterIDQueryVariables,
-  APITypes.MomentsByChapterIDQuery
 >;

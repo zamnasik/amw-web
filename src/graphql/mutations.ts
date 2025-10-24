@@ -15,15 +15,10 @@ export const createStory = /* GraphQL */ `mutation CreateStory(
   createStory(input: $input, condition: $condition) {
     id
     title
-    description
-    tags
-    chapters {
-      nextToken
-      __typename
-    }
+    content
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -38,15 +33,10 @@ export const updateStory = /* GraphQL */ `mutation UpdateStory(
   updateStory(input: $input, condition: $condition) {
     id
     title
-    description
-    tags
-    chapters {
-      nextToken
-      __typename
-    }
+    content
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -61,15 +51,10 @@ export const deleteStory = /* GraphQL */ `mutation DeleteStory(
   deleteStory(input: $input, condition: $condition) {
     id
     title
-    description
-    tags
-    chapters {
-      nextToken
-      __typename
-    }
+    content
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -83,25 +68,12 @@ export const createChapter = /* GraphQL */ `mutation CreateChapter(
 ) {
   createChapter(input: $input, condition: $condition) {
     id
-    title
     storyID
-    story {
-      id
-      title
-      description
-      tags
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    moments {
-      nextToken
-      __typename
-    }
+    title
+    text
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -115,25 +87,12 @@ export const updateChapter = /* GraphQL */ `mutation UpdateChapter(
 ) {
   updateChapter(input: $input, condition: $condition) {
     id
-    title
     storyID
-    story {
-      id
-      title
-      description
-      tags
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    moments {
-      nextToken
-      __typename
-    }
+    title
+    text
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -147,25 +106,12 @@ export const deleteChapter = /* GraphQL */ `mutation DeleteChapter(
 ) {
   deleteChapter(input: $input, condition: $condition) {
     id
-    title
     storyID
-    story {
-      id
-      title
-      description
-      tags
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    moments {
-      nextToken
-      __typename
-    }
+    title
+    text
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -179,23 +125,11 @@ export const createMoment = /* GraphQL */ `mutation CreateMoment(
 ) {
   createMoment(input: $input, condition: $condition) {
     id
-    title
-    notes
     chapterID
-    chapter {
-      id
-      title
-      storyID
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    mediaKey
-    mediaType
+    title
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -209,23 +143,11 @@ export const updateMoment = /* GraphQL */ `mutation UpdateMoment(
 ) {
   updateMoment(input: $input, condition: $condition) {
     id
-    title
-    notes
     chapterID
-    chapter {
-      id
-      title
-      storyID
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    mediaKey
-    mediaType
+    title
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -239,23 +161,11 @@ export const deleteMoment = /* GraphQL */ `mutation DeleteMoment(
 ) {
   deleteMoment(input: $input, condition: $condition) {
     id
-    title
-    notes
     chapterID
-    chapter {
-      id
-      title
-      storyID
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    mediaKey
-    mediaType
+    title
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }

@@ -8,22 +8,14 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreateStory = /* GraphQL */ `subscription OnCreateStory(
-  $filter: ModelSubscriptionStoryFilterInput
-  $owner: String
-) {
-  onCreateStory(filter: $filter, owner: $owner) {
+export const onCreateStory = /* GraphQL */ `subscription OnCreateStory($filter: ModelSubscriptionStoryFilterInput) {
+  onCreateStory(filter: $filter) {
     id
     title
-    description
-    tags
-    chapters {
-      nextToken
-      __typename
-    }
+    content
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -31,22 +23,14 @@ export const onCreateStory = /* GraphQL */ `subscription OnCreateStory(
   APITypes.OnCreateStorySubscriptionVariables,
   APITypes.OnCreateStorySubscription
 >;
-export const onUpdateStory = /* GraphQL */ `subscription OnUpdateStory(
-  $filter: ModelSubscriptionStoryFilterInput
-  $owner: String
-) {
-  onUpdateStory(filter: $filter, owner: $owner) {
+export const onUpdateStory = /* GraphQL */ `subscription OnUpdateStory($filter: ModelSubscriptionStoryFilterInput) {
+  onUpdateStory(filter: $filter) {
     id
     title
-    description
-    tags
-    chapters {
-      nextToken
-      __typename
-    }
+    content
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -54,22 +38,14 @@ export const onUpdateStory = /* GraphQL */ `subscription OnUpdateStory(
   APITypes.OnUpdateStorySubscriptionVariables,
   APITypes.OnUpdateStorySubscription
 >;
-export const onDeleteStory = /* GraphQL */ `subscription OnDeleteStory(
-  $filter: ModelSubscriptionStoryFilterInput
-  $owner: String
-) {
-  onDeleteStory(filter: $filter, owner: $owner) {
+export const onDeleteStory = /* GraphQL */ `subscription OnDeleteStory($filter: ModelSubscriptionStoryFilterInput) {
+  onDeleteStory(filter: $filter) {
     id
     title
-    description
-    tags
-    chapters {
-      nextToken
-      __typename
-    }
+    content
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -77,31 +53,15 @@ export const onDeleteStory = /* GraphQL */ `subscription OnDeleteStory(
   APITypes.OnDeleteStorySubscriptionVariables,
   APITypes.OnDeleteStorySubscription
 >;
-export const onCreateChapter = /* GraphQL */ `subscription OnCreateChapter(
-  $filter: ModelSubscriptionChapterFilterInput
-  $owner: String
-) {
-  onCreateChapter(filter: $filter, owner: $owner) {
+export const onCreateChapter = /* GraphQL */ `subscription OnCreateChapter($filter: ModelSubscriptionChapterFilterInput) {
+  onCreateChapter(filter: $filter) {
     id
-    title
     storyID
-    story {
-      id
-      title
-      description
-      tags
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    moments {
-      nextToken
-      __typename
-    }
+    title
+    text
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -109,31 +69,15 @@ export const onCreateChapter = /* GraphQL */ `subscription OnCreateChapter(
   APITypes.OnCreateChapterSubscriptionVariables,
   APITypes.OnCreateChapterSubscription
 >;
-export const onUpdateChapter = /* GraphQL */ `subscription OnUpdateChapter(
-  $filter: ModelSubscriptionChapterFilterInput
-  $owner: String
-) {
-  onUpdateChapter(filter: $filter, owner: $owner) {
+export const onUpdateChapter = /* GraphQL */ `subscription OnUpdateChapter($filter: ModelSubscriptionChapterFilterInput) {
+  onUpdateChapter(filter: $filter) {
     id
-    title
     storyID
-    story {
-      id
-      title
-      description
-      tags
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    moments {
-      nextToken
-      __typename
-    }
+    title
+    text
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -141,31 +85,15 @@ export const onUpdateChapter = /* GraphQL */ `subscription OnUpdateChapter(
   APITypes.OnUpdateChapterSubscriptionVariables,
   APITypes.OnUpdateChapterSubscription
 >;
-export const onDeleteChapter = /* GraphQL */ `subscription OnDeleteChapter(
-  $filter: ModelSubscriptionChapterFilterInput
-  $owner: String
-) {
-  onDeleteChapter(filter: $filter, owner: $owner) {
+export const onDeleteChapter = /* GraphQL */ `subscription OnDeleteChapter($filter: ModelSubscriptionChapterFilterInput) {
+  onDeleteChapter(filter: $filter) {
     id
-    title
     storyID
-    story {
-      id
-      title
-      description
-      tags
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    moments {
-      nextToken
-      __typename
-    }
+    title
+    text
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -173,29 +101,14 @@ export const onDeleteChapter = /* GraphQL */ `subscription OnDeleteChapter(
   APITypes.OnDeleteChapterSubscriptionVariables,
   APITypes.OnDeleteChapterSubscription
 >;
-export const onCreateMoment = /* GraphQL */ `subscription OnCreateMoment(
-  $filter: ModelSubscriptionMomentFilterInput
-  $owner: String
-) {
-  onCreateMoment(filter: $filter, owner: $owner) {
+export const onCreateMoment = /* GraphQL */ `subscription OnCreateMoment($filter: ModelSubscriptionMomentFilterInput) {
+  onCreateMoment(filter: $filter) {
     id
-    title
-    notes
     chapterID
-    chapter {
-      id
-      title
-      storyID
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    mediaKey
-    mediaType
+    title
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -203,29 +116,14 @@ export const onCreateMoment = /* GraphQL */ `subscription OnCreateMoment(
   APITypes.OnCreateMomentSubscriptionVariables,
   APITypes.OnCreateMomentSubscription
 >;
-export const onUpdateMoment = /* GraphQL */ `subscription OnUpdateMoment(
-  $filter: ModelSubscriptionMomentFilterInput
-  $owner: String
-) {
-  onUpdateMoment(filter: $filter, owner: $owner) {
+export const onUpdateMoment = /* GraphQL */ `subscription OnUpdateMoment($filter: ModelSubscriptionMomentFilterInput) {
+  onUpdateMoment(filter: $filter) {
     id
-    title
-    notes
     chapterID
-    chapter {
-      id
-      title
-      storyID
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    mediaKey
-    mediaType
+    title
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -233,29 +131,14 @@ export const onUpdateMoment = /* GraphQL */ `subscription OnUpdateMoment(
   APITypes.OnUpdateMomentSubscriptionVariables,
   APITypes.OnUpdateMomentSubscription
 >;
-export const onDeleteMoment = /* GraphQL */ `subscription OnDeleteMoment(
-  $filter: ModelSubscriptionMomentFilterInput
-  $owner: String
-) {
-  onDeleteMoment(filter: $filter, owner: $owner) {
+export const onDeleteMoment = /* GraphQL */ `subscription OnDeleteMoment($filter: ModelSubscriptionMomentFilterInput) {
+  onDeleteMoment(filter: $filter) {
     id
-    title
-    notes
     chapterID
-    chapter {
-      id
-      title
-      storyID
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    mediaKey
-    mediaType
+    title
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }

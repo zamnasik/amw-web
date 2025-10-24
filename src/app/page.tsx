@@ -16,7 +16,7 @@ const client = generateClient();
 const LIST_STORIES = /* GraphQL */ `
   query ListStories($limit: Int, $nextToken: String) {
     listStories(limit: $limit, nextToken: $nextToken) {
-      items { id title description createdAt }
+      items { id title content createdAt }
       nextToken
     }
   }
@@ -128,7 +128,7 @@ function AppAuthed() {
         >
           {s.title}
         </Link>
-        <div className="text-sm opacity-75">{s.description ?? "—"}</div>
+        <div className="text-sm opacity-75">{s.content ?? "—"}</div>
       </div>
 
       <div className="flex items-center gap-3">
