@@ -42,12 +42,6 @@
       "auth": {
         "amwweb16eab948": {}
       },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "d21u7wvsxlwud0",
-          "type": "manual"
-        }
-      },
       "api": {
         "amwweb": {}
       }
